@@ -32,10 +32,10 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build Docker image
+                  - name: Build Docker image
         working-directory: app
         run: |
-          docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }} .
+          docker build --build-arg APP_VERSION=${{ github.sha }} --build-arg BUILD_TIME="$(date -u '+%Y-%m-%d %H:%M:%S UTC')" -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }} .
 
       - name: Push Docker image to ECR
         run: |

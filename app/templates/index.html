@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudOps Deployment Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <div>
+        <h1>CloudOps Deployment Dashboard</h1>
+        <p>End-to-End CI/CD Pipeline • AWS ECS Fargate</p>
+    </div>
+    <div class="status">
+        <span>●</span> OPERATIONAL
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div>
+            <p class="label">APPLICATION STATUS</p>
+            <h2>Deployment Successful</h2>
+            <p class="muted">Application is running on the AWS container platform.</p>
+        </div>
+        <div class="health">
+            <strong>✓</strong>
+            <span>Healthy</span>
+        </div>
+    </section>
+
+    <section class="cards">
+
+        <div class="card">
+            <span>PLATFORM</span>
+            <h3>{{ environment }}</h3>
+        </div>
+
+        <div class="card">
+            <span>AWS REGION</span>
+            <h3>{{ region }}</h3>
+        </div>
+
+        <div class="card">
+            <span>CONTAINER</span>
+            <h3>Docker</h3>
+        </div>
+
+        <div class="card">
+            <span>REGISTRY</span>
+            <h3>Amazon ECR</h3>
+        </div>
+
+        <div class="card">
+            <span>CI/CD</span>
+            <h3>GitHub Actions</h3>
+        </div>
+
+        <div class="card">
+            <span>INFRASTRUCTURE</span>
+            <h3>Terraform</h3>
+        </div>
+
+    </section>
+
+    <section class="pipeline">
+        <div class="section-title">
+            <h2>Deployment Pipeline</h2>
+            <p>Automated software delivery workflow</p>
+        </div>
+
+        <div class="flow">
+
+            <div class="stage">
+                <div class="icon">01</div>
+                <strong>GitHub</strong>
+                <small>Source Code</small>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="stage">
+                <div class="icon">02</div>
+                <strong>Actions</strong>
+                <small>CI/CD</small>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="stage">
+                <div class="icon">03</div>
+                <strong>Docker</strong>
+                <small>Build Image</small>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="stage">
+                <div class="icon">04</div>
+                <strong>Amazon ECR</strong>
+                <small>Image Registry</small>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="stage">
+                <div class="icon">05</div>
+                <strong>ECS Fargate</strong>
+                <small>Deployment</small>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="details">
+
+        <div class="panel">
+            <h2>Deployment Information</h2>
+
+            <div class="row">
+                <span>Application</span>
+                <strong>aws-ecs-cicd-app</strong>
+            </div>
+
+            <div class="row">
+                <span>Version</span>
+                <strong>{{ app_version }}</strong>
+            </div>
+
+            <div class="row">
+                <span>Build Time</span>
+                <strong>{{ build_time }}</strong>
+            </div>
+
+            <div class="row">
+                <span>Port</span>
+                <strong>5000</strong>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Infrastructure</h2>
+
+            <div class="row">
+                <span>Compute</span>
+                <strong>AWS ECS Fargate</strong>
+            </div>
+
+            <div class="row">
+                <span>Container Registry</span>
+                <strong>Amazon ECR</strong>
+            </div>
+
+            <div class="row">
+                <span>Infrastructure as Code</span>
+                <strong>Terraform</strong>
+            </div>
+
+            <div class="row">
+                <span>Monitoring</span>
+                <strong>AWS CloudWatch</strong>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    AWS ECS CI/CD Platform • Automated Deployment Dashboard
+</footer>
+
+</body>
+</html>
