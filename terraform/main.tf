@@ -52,11 +52,14 @@ resource "aws_iam_role" "ecs_task_execution" {
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
+
     Statement = [{
       Effect = "Allow"
+
       Principal = {
         Service = "ecs-tasks.amazonaws.com"
       }
+
       Action = "sts:AssumeRole"
     }]
   })
@@ -65,6 +68,11 @@ resource "aws_iam_role" "ecs_task_execution" {
 resource "aws_iam_role_policy_attachment" "ecs_task_execution" {
   role       = aws_iam_role.ecs_task_execution.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
+resource "aws_cloudwatch_log_group" "app" {
+  name              = "/ecs/aws-ecs-cicd-app"
+  retention_in_days = 1
 }
 
 resource "aws_ecs_task_definition" "app" {
@@ -85,6 +93,16 @@ resource "aws_ecs_task_definition" "app" {
       hostPort      = 5000
       protocol      = "tcp"
     }]
+
+    logConfiguration = {
+      logDriver = "awslogs"
+
+      options = {
+        "awslogs-group"         = "/ecs/aws-ecs-cicd-app"
+        "awslogs-region"        = "ap-south-1"
+        "awslogs-stream-prefix" = "ecs"
+      }
+    }
   }])
 }
 
@@ -94,6 +112,10 @@ resource "aws_ecs_service" "app" {
   task_definition = aws_ecs_task_definition.app.arn
   desired_count   = 0
   launch_type     = "FARGATE"
+
+  lifecycle {
+    ignore_changes = [task_definition]
+  }
 
   network_configuration {
     subnets          = data.aws_subnets.default.ids
